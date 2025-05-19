@@ -7,6 +7,7 @@ import { handleAddUserToRoom } from "./controllers/addUserToRoom";
 import { handleAddShips } from "./controllers/addShips";
 import { handleAttack } from "./controllers/attack";
 import { handleRandomAttack } from "./controllers/randomAttack";
+import { handleSinglePlay } from "./controllers/singlePlay";
 
 export function startWSServer() {
   const wss = new WebSocketServer({ port: 3000 });
@@ -40,6 +41,9 @@ export function startWSServer() {
           break;
         case RequestType.randomAttack:
           handleRandomAttack(dataObj);
+          break;
+        case RequestType.singlePlay:
+          handleSinglePlay(clientId);
           break;
       }
     });
