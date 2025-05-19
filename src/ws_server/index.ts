@@ -1,6 +1,7 @@
 import { WebSocketServer } from "ws";
 import { isJSON } from "./utils/isJSON";
 import { RequestType } from "./enums/requestType";
+import { handleReg } from "./controllers/reg";
 
 export function startWSServer() {
   const wss = new WebSocketServer({ port: 3000 });
@@ -15,6 +16,12 @@ export function startWSServer() {
       const dataObj = isJSON(data) ? JSON.parse(data) : data;
 
       console.log(type, "from", clientId);
+
+      switch (type) {
+        case RequestType.reg:
+          handleReg(dataObj, clientId, ws);
+          break;
+      }
     });
   });
 }
