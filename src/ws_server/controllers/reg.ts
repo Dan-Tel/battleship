@@ -13,6 +13,10 @@ export function handleReg(
   const db = DB.getInstance();
   const users = db.users;
 
+  if (users.find((u) => u.userName === dataObj.name)) {
+    return;
+  }
+
   const user: User = {
     userName: dataObj.name,
     userId: clientId,
