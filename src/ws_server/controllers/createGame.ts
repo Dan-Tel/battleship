@@ -1,6 +1,7 @@
 import { Room } from "ws_server/types/room";
 import { DB } from "../db/db";
 import { ShipSize } from "../enums/shipSize";
+import { handleAddShips } from "./addShips";
 
 export function handleCreateGame(room: Room) {
   const db = DB.getInstance();
@@ -44,7 +45,11 @@ export function handleCreateGame(room: Room) {
         })
       );
     } else {
-      // handleAddShips for bots !
+      handleAddShips({
+        gameId: gameId,
+        ships: botShipPlacement(),
+        indexPlayer: u.userId,
+      });
     }
   });
 }
