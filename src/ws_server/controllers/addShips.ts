@@ -1,6 +1,7 @@
 import { AddShipsData } from "../types/data.js";
 import { DB } from "../db/db";
 import { Ship } from "../types/ship";
+import { handleStartGame } from "./startGame.js";
 
 export function handleAddShips(data: AddShipsData) {
   const db = DB.getInstance();
@@ -39,4 +40,8 @@ export function handleAddShips(data: AddShipsData) {
   });
 
   user.isReady = true;
+
+  if (game.gameUsers.every((u) => u.isReady)) {
+    handleStartGame(game);
+  }
 }
