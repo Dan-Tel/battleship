@@ -2,6 +2,7 @@ import { ResponseType } from "../enums/responseType";
 import { DB } from "../db/db";
 import { User } from "../types/user";
 import { RegData } from "../types/data";
+import { handleUpdateRoom } from "./updateRoom";
 
 export function handleReg(
   dataObj: RegData,
@@ -33,4 +34,6 @@ export function handleReg(
   };
 
   ws.send(JSON.stringify(response));
+
+  handleUpdateRoom();
 }
