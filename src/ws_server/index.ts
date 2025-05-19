@@ -2,6 +2,7 @@ import { WebSocketServer } from "ws";
 import { isJSON } from "./utils/isJSON";
 import { RequestType } from "./enums/requestType";
 import { handleReg } from "./controllers/reg";
+import { handleCreateRoom } from "./controllers/createRoom";
 
 export function startWSServer() {
   const wss = new WebSocketServer({ port: 3000 });
@@ -20,6 +21,9 @@ export function startWSServer() {
       switch (type) {
         case RequestType.reg:
           handleReg(dataObj, clientId, ws);
+          break;
+        case RequestType.createRoom:
+          handleCreateRoom(clientId);
           break;
       }
     });
