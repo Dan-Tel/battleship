@@ -1,0 +1,20 @@
+import { WebSocketServer } from "ws";
+import { isJSON } from "./utils/isJSON";
+import { RequestType } from "./enums/requestType";
+
+export function startWSServer() {
+  const wss = new WebSocketServer({ port: 3000 });
+
+  wss.on("connection", function connection(ws) {
+    const clientId = Date.now().toString();
+
+    ws.on("error", console.error);
+
+    ws.on("message", function message(msg) {
+      const { type, data } = JSON.parse(`${msg}`);
+      const dataObj = isJSON(data) ? JSON.parse(data) : data;
+
+      console.log(type, "from", clientId);
+    });
+  });
+}
