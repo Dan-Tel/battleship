@@ -2,6 +2,7 @@ import { AttackData } from "../types/data.js";
 import { DB } from "../db/db";
 import { handleTurn } from "./turn";
 import { randomCell } from "../utils/randomCell";
+import { handleFinish } from "./finish.js";
 
 export function handleAttack(data: AttackData) {
   const db = DB.getInstance();
@@ -113,6 +114,10 @@ export function handleAttack(data: AttackData) {
         id: 0,
       })
     );
+  }
+
+  if (enemy.aliveShips == 0) {
+    handleFinish(game, indexPlayer);
   }
 
   if (enemy.userName == "BOT") {
