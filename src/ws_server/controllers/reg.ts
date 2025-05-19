@@ -3,6 +3,7 @@ import { DB } from "../db/db";
 import { User } from "../types/user";
 import { RegData } from "../types/data";
 import { handleUpdateRoom } from "./updateRoom";
+import { handleUpdateWinners } from "./updateWinners";
 
 export function handleReg(
   dataObj: RegData,
@@ -36,4 +37,5 @@ export function handleReg(
   ws.send(JSON.stringify(response));
 
   handleUpdateRoom();
+  handleUpdateWinners();
 }
