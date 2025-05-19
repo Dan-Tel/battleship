@@ -4,6 +4,8 @@ import { RequestType } from "./enums/requestType";
 import { handleReg } from "./controllers/reg";
 import { handleCreateRoom } from "./controllers/createRoom";
 import { handleAddUserToRoom } from "./controllers/addUserToRoom";
+import { handleAddShips } from "./controllers/addShips";
+import { handleAttack } from "./controllers/attack";
 
 export function startWSServer() {
   const wss = new WebSocketServer({ port: 3000 });
@@ -28,6 +30,12 @@ export function startWSServer() {
           break;
         case RequestType.addUserToRoom:
           handleAddUserToRoom(dataObj, clientId);
+          break;
+        case RequestType.addShips:
+          handleAddShips(dataObj);
+          break;
+        case RequestType.attack:
+          handleAttack(dataObj);
           break;
       }
     });
