@@ -1,7 +1,7 @@
-import { AddShipsData } from "../types/data.js";
+import { AddShipsData } from "../types/data";
 import { DB } from "../db/db";
 import { Ship } from "../types/ship";
-import { handleStartGame } from "./startGame.js";
+import { handleStartGame } from "./startGame";
 
 export function handleAddShips(data: AddShipsData) {
   const db = DB.getInstance();

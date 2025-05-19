@@ -1,4 +1,4 @@
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 import { isJSON } from "./utils/isJSON";
 import { RequestType } from "./enums/requestType";
 import { handleReg } from "./controllers/reg";
@@ -11,17 +11,25 @@ import { handleSinglePlay } from "./controllers/singlePlay";
 
 export function startWSServer() {
   const wss = new WebSocketServer({ port: 3000 });
+  const clients = new Set<WebSocket>();
 
   wss.on("connection", function connection(ws) {
     const clientId = Date.now().toString();
+    clients.add(ws);
 
     ws.on("error", console.error);
+
+    ws.on("close", () => {
+      clients.delete(ws);
+      console.log(`Client ${clientId} disconnected`);
+    });
 
     ws.on("message", function message(msg) {
       const { type, data } = JSON.parse(`${msg}`);
       const dataObj = isJSON(data) ? JSON.parse(data) : data;
 
-      console.log(type, "from", clientId);
+      console.log(`📥 Received command: ${type} from ${clientId}`);
+      console.log("🔹 Input data:", dataObj);
 
       switch (type) {
         case RequestType.reg:
@@ -47,5 +55,15 @@ export function startWSServer() {
           break;
       }
     });
+  });
+
+  process.on("SIGINT", () => {
+    console.log("\nShutting down WebSocket server...");
+
+    for (const client of clients) {
+      client.close(1000, "Server shutting down");
+    }
+
+    process.exit(0);
   });
 }

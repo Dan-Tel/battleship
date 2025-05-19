@@ -1,8 +1,8 @@
-import { AttackData } from "../types/data.js";
+import { AttackData } from "../types/data";
 import { DB } from "../db/db";
 import { handleTurn } from "./turn";
 import { randomCell } from "../utils/randomCell";
-import { handleFinish } from "./finish.js";
+import { handleFinish } from "./finish";
 
 export function handleAttack(data: AttackData) {
   const db = DB.getInstance();
