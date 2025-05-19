@@ -6,6 +6,7 @@ import { handleCreateRoom } from "./controllers/createRoom";
 import { handleAddUserToRoom } from "./controllers/addUserToRoom";
 import { handleAddShips } from "./controllers/addShips";
 import { handleAttack } from "./controllers/attack";
+import { handleRandomAttack } from "./controllers/randomAttack";
 
 export function startWSServer() {
   const wss = new WebSocketServer({ port: 3000 });
@@ -36,6 +37,9 @@ export function startWSServer() {
           break;
         case RequestType.attack:
           handleAttack(dataObj);
+          break;
+        case RequestType.randomAttack:
+          handleRandomAttack(dataObj);
           break;
       }
     });
