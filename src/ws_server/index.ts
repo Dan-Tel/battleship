@@ -3,6 +3,7 @@ import { isJSON } from "./utils/isJSON";
 import { RequestType } from "./enums/requestType";
 import { handleReg } from "./controllers/reg";
 import { handleCreateRoom } from "./controllers/createRoom";
+import { handleAddUserToRoom } from "./controllers/addUserToRoom";
 
 export function startWSServer() {
   const wss = new WebSocketServer({ port: 3000 });
@@ -24,6 +25,9 @@ export function startWSServer() {
           break;
         case RequestType.createRoom:
           handleCreateRoom(clientId);
+          break;
+        case RequestType.addUserToRoom:
+          handleAddUserToRoom(dataObj, clientId);
           break;
       }
     });
