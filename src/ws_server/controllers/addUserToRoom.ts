@@ -1,6 +1,7 @@
 import { AddUserToRoomData } from "ws_server/types/data";
 import { DB } from "../db/db";
 import { handleUpdateRoom } from "./updateRoom";
+import { handleCreateGame } from "./createGame";
 
 export function handleAddUserToRoom(
   data: AddUserToRoomData,
@@ -32,4 +33,8 @@ export function handleAddUserToRoom(
   user.roomId = indexRoom;
 
   handleUpdateRoom();
+
+  if (room.roomUsers.length == 2) {
+    handleCreateGame(room);
+  }
 }
